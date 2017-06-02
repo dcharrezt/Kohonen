@@ -2,14 +2,16 @@
 
 #include <QDebug>
 
-Kohonen::Kohonen(II neurons_per_side, II n_features, inputs training_set)
+Kohonen::Kohonen(II neurons_per_side, II n_features, inputs training_set, II n_iterations)
 {
     this->neurons_per_side = neurons_per_side;
     this->n_features = n_features;
     this->training_set = training_set;
 
+    this->n_iterations = n_iterations;
+    this->radius = neurons_per_side;
     this->current_iteration = 0;
-    this->lambda = 100;
+    this->lambda = n_iterations / neurons_per_side;
     this->alpha = 0.5;
 
     qDebug()  << "Size: " << this->training_set.size();
@@ -57,13 +59,12 @@ FF Kohonen::euclidean_distance(neuron n, neuron m)
 
 void Kohonen::get_BMU()
 {
-    FF min;
     FF tmp;
     II coor[3];
 
     for(auto m : training_set)
     {
-        min = 9999999;
+        current_BMU_distance = 9999999;
         tmp = 0.;
         coor[0] = 0;
         coor[1] = 0;
@@ -76,9 +77,9 @@ void Kohonen::get_BMU()
                 for(unsigned int k = 0; k<neurons_per_side; k++)
                 {
                     tmp = euclidean_distance(m, map[i][j][k]);
-                    if( tmp < min)
+                    if( tmp < current_BMU_distance)
                     {
-                        min = tmp;
+                        current_BMU_distance = tmp;
                         coor[0] = i;
                         coor[1] = j;
                         coor[2] = k;
@@ -86,11 +87,31 @@ void Kohonen::get_BMU()
                 }
             }
         }
-        modify_weights(coor);
+//        modify_weights(coor, current_BMU_distance);
     }
+}
+
+FF Kohonen::get_radius()
+{
+    return radius * exp(-current_iteration/lambda);
+}
+
+FF Kohonen::get_learning_rate()
+{
+    return alpha * exp(-current_iteration/lambda);
+}
+
+FF Kohonen::get_theta()
+{
+    return exp( -(pow( current_BMU_distance,2)) / 2*pow(current_radius,2) );
 }
 
 void Kohonen::modify_weights(II coor[3])
 {
+    auto r = get_radius();
+    auto l = get_learning_rate();
+    auto o = get_theta();
+
+
 
 }

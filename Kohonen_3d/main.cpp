@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 
     cout << "Size: " << inputs.size() << endl;
 
-    Kohonen som(8,5,inputs);
+    Kohonen som(8,5,inputs,1000);
     som.generate_map();
 
 
