@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include <QApplication>
 
+#include "kohonen.h"
 
 #include "CImg.h"
 
@@ -22,27 +23,28 @@ vector<vector<float>> training_Set(vector<string> &names);
 
 int main(int argc, char *argv[])
 {
+    srand(time(NULL));
+
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
 
-    cout << "Beginning" << endl;
+    Kohonen som(8,5);
+    som.generate_map();
+
 
     auto names = read_file("jaffe/a_names.dat");
-    for(auto i: names){
-        cout << i << endl;
-    }
 
     auto inputs = training_Set(names);
-    for(auto i: inputs){
-        for(auto j=0; j<i.size(); j++){
-            if(j<i.size()-1)
-                cout << i[j] << ' ';
-            else
-                cout << i[j];
-        }
-        cout << endl;
-    }
+//    for(auto i: inputs){
+//        for(auto j=0; j<i.size(); j++){
+//            if(j<i.size()-1)
+//                cout << i[j] << ' ';
+//            else
+//                cout << i[j];
+//        }
+//        cout << endl;
+//    }
 
 
     return a.exec();

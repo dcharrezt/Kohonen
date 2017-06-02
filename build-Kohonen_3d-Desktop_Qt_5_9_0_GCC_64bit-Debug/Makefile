@@ -52,9 +52,11 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../Kohonen_3d/main.cpp \
-		../Kohonen_3d/mainwindow.cpp moc_mainwindow.cpp
+		../Kohonen_3d/mainwindow.cpp \
+		../Kohonen_3d/kohonen.cpp moc_mainwindow.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
+		kohonen.o \
 		moc_mainwindow.o
 DIST          = ../Kohonen_3d/jaffe/convertir.sh \
 		../Kohonen_3d/jaffe/KA.AN1.39.jpg \
@@ -453,8 +455,10 @@ DIST          = ../Kohonen_3d/jaffe/convertir.sh \
 		../../../Qt5/5.9/gcc_64/mkspecs/features/yacc.prf \
 		../../../Qt5/5.9/gcc_64/mkspecs/features/lex.prf \
 		../Kohonen_3d/Kohonen_3d.pro ../Kohonen_3d/CImg.h \
-		../Kohonen_3d/mainwindow.h ../Kohonen_3d/main.cpp \
-		../Kohonen_3d/mainwindow.cpp
+		../Kohonen_3d/mainwindow.h \
+		../Kohonen_3d/kohonen.h ../Kohonen_3d/main.cpp \
+		../Kohonen_3d/mainwindow.cpp \
+		../Kohonen_3d/kohonen.cpp
 QMAKE_TARGET  = Kohonen_3d
 DESTDIR       = 
 TARGET        = Kohonen_3d
@@ -850,8 +854,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Qt5/5.9/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Kohonen_3d/CImg.h ../Kohonen_3d/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Kohonen_3d/main.cpp ../Kohonen_3d/mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Kohonen_3d/CImg.h ../Kohonen_3d/mainwindow.h ../Kohonen_3d/kohonen.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Kohonen_3d/main.cpp ../Kohonen_3d/mainwindow.cpp ../Kohonen_3d/kohonen.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Kohonen_3d/mainwindow.ui $(DISTDIR)/
 
 
@@ -1272,6 +1276,9 @@ mainwindow.o: ../Kohonen_3d/mainwindow.cpp ../Kohonen_3d/mainwindow.h \
 		../../../Qt5/5.9/gcc_64/include/QtWidgets/qtoolbar.h \
 		../../../Qt5/5.9/gcc_64/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../Kohonen_3d/mainwindow.cpp
+
+kohonen.o: ../Kohonen_3d/kohonen.cpp ../Kohonen_3d/kohonen.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o kohonen.o ../Kohonen_3d/kohonen.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

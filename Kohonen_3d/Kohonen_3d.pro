@@ -29,11 +29,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    kohonen.cpp
 
 HEADERS += \
     CImg.h \
-    mainwindow.h
+    mainwindow.h \
+    kohonen.h
 
 FORMS += \
         mainwindow.ui
