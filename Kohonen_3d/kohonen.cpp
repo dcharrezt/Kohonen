@@ -60,15 +60,12 @@ FF Kohonen::euclidean_distance(neuron n, neuron m)
 void Kohonen::get_BMU()
 {
     FF tmp;
-    II coor[3];
 
     for(auto m : training_set)
     {
         current_BMU_distance = 9999999;
         tmp = 0.;
-        coor[0] = 0;
-        coor[1] = 0;
-        coor[2] = 0;
+        current_coor[0] = current_coor[1] = current_coor[2] = 0;
 
         for(unsigned int i = 0; i<neurons_per_side; i++)
         {
@@ -80,9 +77,9 @@ void Kohonen::get_BMU()
                     if( tmp < current_BMU_distance)
                     {
                         current_BMU_distance = tmp;
-                        coor[0] = i;
-                        coor[1] = j;
-                        coor[2] = k;
+                        current_coor[0] = i;
+                        current_coor[1] = j;
+                        current_coor[2] = k;
                     }
                 }
             }
@@ -91,9 +88,9 @@ void Kohonen::get_BMU()
     }
 }
 
-FF Kohonen::get_radius()
+void Kohonen::get_radius()
 {
-    return radius * exp(-current_iteration/lambda);
+    current_radius = radius * exp(-current_iteration/lambda);
 }
 
 FF Kohonen::get_learning_rate()
@@ -106,12 +103,44 @@ FF Kohonen::get_theta()
     return exp( -(pow( current_BMU_distance,2)) / 2*pow(current_radius,2) );
 }
 
-void Kohonen::modify_weights(II coor[3])
+void Kohonen::modify_weights(vector<FF> input)
 {
-    auto r = get_radius();
+    get_radius();
     auto l = get_learning_rate();
     auto o = get_theta();
 
+    map[current_coor[0]][current_coor[1]][current_coor[2]] = map[current_coor[0]][current_coor[1]][current_coor[2]] +
+            ( input - map[current_coor[0]][current_coor[1]][current_coor[2]] )*(o*l);
+}
 
+neuron operator*(const neuron &b, double k)
+{
+    neuron c;
+    for(unsigned int i = 0; i < b.size(); i++)
+    {
+        c.push_back(k * b[i]);
+    }
+    return c;
+}
+
+neuron operator+(const neuron &a, const neuron &b)
+{
+    neuron c;
+    for(unsigned int i = 0; i < b.size(); i++)
+    {
+        c.push_back(a[i] + b[i]);
+    }
+    return c;
+}
+
+neuron operator-(const neuron &a, const neuron &b)
+{
+    neuron c;
+    for(unsigned int i = 0; i < b.size(); i++)
+    {
+        c.push_back(a[i] - b[i]);
+    }
+    return c;
 
 }
+

@@ -2,7 +2,6 @@
 #include <QApplication>
 
 #include "kohonen.h"
-
 #include "CImg.h"
 
 #include<iostream>
@@ -31,12 +30,13 @@ int main(int argc, char *argv[])
     auto names = read_file("jaffe/a_names.dat");
     auto inputs = training_Set(names);
 
-    cout << "Size: " << inputs.size() << endl;
+    auto n_iterations = 1000;
+    auto neurons_per_side = 8;
+    auto n_features = 5;
 
-    Kohonen som(8,5,inputs,1000);
-    som.generate_map();
+    Kohonen som(neurons_per_side, n_features, inputs,n_iterations);
 
-
+//    som.generate_map();
 
 //    for(auto i: inputs){
 //        for(auto j=0; j<i.size(); j++){

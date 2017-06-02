@@ -22,7 +22,7 @@ private:
     II neurons_per_side;
     II n_features;
     inputs training_set;
-
+    II current_coor[3];
     II n_iterations;
     II current_iteration;
     FF current_BMU_distance;
@@ -31,8 +31,6 @@ private:
     FF lambda;
     FF alpha;
 
-
-
 public:
     Kohonen(II neurons_per_side, II n_features, inputs training_set, II n_iterations);
 
@@ -40,12 +38,17 @@ public:
     FF euclidean_distance(neuron n, neuron m);
     void get_BMU();
 
-    FF get_radius();
+    void get_radius();
     FF get_learning_rate();
     FF get_theta();
 
-    void modify_weights(II coor[3]);
+    void modify_weights(vector<FF> input);
 
 };
+
+
+neuron operator*(const neuron& v, double alfa);
+neuron operator+(const neuron& v1, const neuron& v2);
+neuron operator-(const neuron& v1, const neuron& v2);
 
 #endif // KOHONEN_H
