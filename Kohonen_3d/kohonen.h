@@ -23,11 +23,17 @@ private:
     II n_features;
     inputs training_set;
 
+    II current_iteration;
+    II lambda;
+    FF alpha;
+
 public:
     Kohonen(II neurons_per_side, II n_features, inputs training_set);
 
     void generate_map();
     FF euclidean_distance(neuron n, neuron m);
+    void get_BMU();
+    void modify_weights(II coor[3]);
 
 };
 
