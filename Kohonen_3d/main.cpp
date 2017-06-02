@@ -8,7 +8,6 @@
 #include<iostream>
 #include<fstream>
 #include<string>
-#include <vector>
 
 typedef int II;
 typedef float FF;
@@ -29,13 +28,16 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
-    Kohonen som(8,5);
+    auto names = read_file("jaffe/a_names.dat");
+    auto inputs = training_Set(names);
+
+    cout << "Size: " << inputs.size() << endl;
+
+    Kohonen som(8,5,inputs);
     som.generate_map();
 
 
-    auto names = read_file("jaffe/a_names.dat");
 
-    auto inputs = training_Set(names);
 //    for(auto i: inputs){
 //        for(auto j=0; j<i.size(); j++){
 //            if(j<i.size()-1)
